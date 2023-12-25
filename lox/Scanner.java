@@ -83,17 +83,7 @@ class Scanner {
 	    }
 
 	    else if (match('*')) {
-		while (peek() != '*' && peekNext() != '/' && !isAtEnd()) {
-		    if (peek() == '\n') line++;
-		    advance();
-		}
-		if (isAtEnd()) {
-		    Lox.error(line, "Unterminated Comment");
-		    return;
-		}
-		//Eat last */
-		advance();
-		advance();
+	        multilineComment();
 	    }
 	    
 	    else {
@@ -149,6 +139,20 @@ class Scanner {
 	}
 
 	addToken(TokenType.NUMBER, Double.parseDouble(source.substring(start, current)));
+    }
+
+    private void multilineComment() {
+	while (peek() != '*' && peekNext() != '/' && !isAtEnd()) {
+		    if (peek() == '\n') line++;
+		    advance();
+		}
+		if (isAtEnd()) {
+		    Lox.error(line, "Unterminated Comment");
+		    return;
+		}
+		//Eat last */
+		advance();
+		advance();
     }
 
     private void string() {

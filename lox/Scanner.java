@@ -81,6 +81,20 @@ class Scanner {
 		//Eat until we reach EOF or newline, we dont care about comments
 		while (peek() != '\n' && !isAtEnd()) advance();
 	    }
+
+	    else if (match('*')) {
+		while (peek() != '*' && peekNext() != '/' && !isAtEnd()) {
+		    if (peek() == '\n') line++;
+		    advance();
+		}
+		if (isAtEnd()) {
+		    Lox.error(line, "Unterminated Comment");
+		    return;
+		}
+		//Eat last */
+		advance();
+		advance();
+	    }
 	    
 	    else {
 		addToken(TokenType.SLASH);

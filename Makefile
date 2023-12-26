@@ -3,6 +3,7 @@ build:
 
 generate:
 	javac tool/*.java
+	java tool/GenerateAst lox/
 
 ungen:
 	rm tool/*.class

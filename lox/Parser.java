@@ -12,6 +12,14 @@ class Parser {
 	this.tokens = tokens;
     }
 
+    Expr parse() {
+	try {
+	    return expression();
+	} catch (ParseError error) {
+	    return null;
+	}
+    }
+
     private Expr expression() {
 	return equality();
     }
@@ -80,7 +88,7 @@ class Parser {
 	    return new Expr.Grouping(expr);
 	}
 
-	return null;//To get rid of editor warning :(
+        throw error(peek(), "Expect expression.");
 	
     }
 
